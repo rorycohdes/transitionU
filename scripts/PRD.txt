@@ -1,0 +1,147 @@
+OVERVIEW
+
+This document outlines the requirements for "TransitionU", a mobile application designed to assist international students in assimilating to life in the United States. The app aims to solve the common challenges international students face, such as navigating pre-arrival procedures, understanding cultural nuances, setting up essential services, and connecting with their peers and university resources. It targets international students planning to study or currently studying in the U.S. and provides value by centralizing information, offering personalized guidance, and fostering a supportive community.
+
+CORE FEATURES
+
+* Login/Authentication:
+    * What it does: Allows users to create accounts and securely log in to the application.
+    * Why it's important: Essential for personalization, data security, and accessing user-specific features like DMs and institution-specific information.
+    * How it works: Users register with email/password or potentially social logins. Authentication handled via Supabase Auth.
+* Roadmap / Pre-arrival Checklist / Achievements:
+    * What it does: Provides a structured guide for tasks before and upon arrival (visa application, housing, packing, etc.) and tracks completed milestones.
+    * Why it's important: Reduces overwhelm and ensures students complete necessary steps for a smooth transition.
+    * How it works: Presents checklists, potentially customizable based on user input (e.g., visa type, destination). Achievements unlock as tasks are completed.
+* Getting Set Up Page:
+    * What it does: Guides users through initial setup steps after arrival (opening bank account, getting a phone plan, understanding local transport). Connects students with institution-specific processes based on their school and major.
+    * Why it's important: Addresses immediate post-arrival needs and provides tailored information relevant to the student's specific university and academic program.
+    * How it works: Features guides, links to resources, and potentially integrates with university systems (future enhancement) after users input their institution and major details.
+* AI Assistant / FAQ Page:
+    * What it does: Offers an AI-powered chatbot to answer frequently asked questions about studying and living in the U.S. Covers topics like visa regulations, cultural norms, academic expectations, etc.
+    * Why it's important: Provides instant support and answers common queries, reducing the need for extensive searching.
+    * How it works: Utilizes a knowledge base and potentially an LLM integration to understand and respond to user questions. Includes a curated list of FAQs.
+* Forum / Discussion Page:
+    * What it does: Creates a community space, potentially anonymous like YikYak, for students to ask questions, share experiences, and connect with peers.
+    * Why it's important: Fosters a sense of community and allows for peer-to-peer support and information sharing.
+    * How it works: Users can post messages, reply to others, and upvote/downvote content. Moderation features will be necessary. Posts could be location-based or topic-based.
+* Direct Messaging (DMs):
+    * What it does: Enables private one-on-one conversations between users.
+    * Why it's important: Allows for private connections and follow-up conversations initiated in the forum or elsewhere.
+    * How it works: Standard messaging interface with user search/connection capabilities.
+
+USER EXPERIENCE
+
+* User Personas:
+    * Prospective Student (e.g., Anya): Planning to study in the US, needs help with visa application, pre-arrival checklist, understanding initial costs.
+    * Newly Arrived Student (e.g., Ben): Just arrived, needs help setting up a bank account, phone, finding accommodation, understanding campus resources, connecting with peers.
+    * Continuing Student (e.g., Chloe): Has been in the US for a semester, uses the app for community connection, asking specific questions, and potentially sharing advice.
+* Key User Flows:
+    * Onboarding: Register -> Login -> Complete Profile (Institution, Major) -> Initial Setup Guide.
+    * Pre-arrival Planning: Login -> Access Roadmap/Checklist -> Mark tasks complete -> View Achievements.
+    * Getting Help: Login -> Access AI Assistant -> Ask Question OR Access Forum -> Post Question/Browse Topics.
+    * Connecting: Login -> Access Forum -> Interact with Posts OR Access DMs -> Start Conversation.
+* UI/UX Considerations:
+    * Clean, intuitive interface.
+    * Clear navigation, likely using bottom navigation icons for main pages (Roadmap, Setup, AI Assistant, Forum, DMs).
+    * Use of components like shadcn for a modern look and feel, but flexible to use others as needed.
+    * Accessibility considerations for diverse users.
+    * Visual progress indicators for checklists and achievements.
+
+TECHNICAL ARCHITECTURE
+
+* System Components:
+    * Frontend: Mobile App (Expo/React Native).
+    * Backend: Supabase (Database, Auth, potentially Edge Functions).
+    * AI Assistant: Integration with a third-party LLM API or a simpler knowledge base lookup.
+* Data Models (Supabase Tables):
+    * users: Stores user profile information (auth ID, email, name, institution, major, etc.).
+    * checklist_items: Stores default checklist items.
+    * user_checklist_progress: Tracks user progress on checklist items.
+    * achievements: Defines available achievements.
+    * user_achievements: Tracks earned achievements.
+    * setup_guides: Stores content for the 'Getting Set Up' page, potentially filterable by institution/major.
+    * faq_items: Stores questions and answers for the FAQ/AI base.
+    * forum_posts: Stores forum posts (content, user ID, timestamp, upvotes).
+    * forum_replies: Stores replies to forum posts.
+    * direct_messages: Stores DM content between users.
+* APIs and Integrations:
+    * Supabase API for all backend interactions.
+    * Potential third-party API for AI Assistant.
+    * Future: University-specific APIs (if available and feasible) for deeper integration.
+* Infrastructure Requirements:
+    * Supabase account.
+    * Expo Application Services (EAS) for builds and updates.
+    * Hosting for any potential custom backend logic/API (if Supabase Edge Functions are insufficient).
+    * (Optional) AI service subscription.
+* Technology Stack:
+    * Frontend: Expo, React Native, TypeScript.
+    * Backend: Supabase.
+    * UI Components: shadcn/ui or similar React Native component libraries.
+
+DEVELOPMENT ROADMAP
+
+* Phase 1: Foundation & Core MVP
+    * User Authentication (Login/Signup).
+    * Basic Profile Setup (including institution/major input).
+    * Roadmap/Checklist functionality (static list initially).
+    * Getting Set Up page (static content).
+    * Basic Bottom Navigation Shell.
+    * Supabase project setup and basic data models.
+* Phase 2: Community & Interaction
+    * Forum/Discussion page (posting, viewing).
+    * Direct Messaging (basic implementation).
+    * Refine Checklist: Add user progress tracking.
+    * Refine Setup Page: Filter content based on profile.
+* Phase 3: Intelligence & Polish
+    * AI Assistant / FAQ page implementation.
+    * Achievements system implementation.
+    * Forum enhancements (replies, voting).
+    * UI/UX refinements based on initial testing.
+* Future Enhancements:
+    * Deeper University Integrations (API connections).
+    * Advanced AI capabilities (more personalization).
+    * Event listings (campus/local).
+    * Mentorship connections.
+    * Gamification beyond achievements.
+    * Improved moderation tools for forum/DMs.
+
+LOGICAL DEPENDENCY CHAIN
+
+1.  Authentication & User Profile: Must be built first as most features depend on knowing the user and their context (institution/major). This includes Supabase setup.
+2.  Navigation Shell: Implement the basic app structure with bottom navigation early to house subsequent features.
+3.  Roadmap/Checklist (Static): A core value proposition, can be implemented relatively early with static data to provide immediate utility.
+4.  Getting Set Up (Static): Similar to the checklist, provides core value early.
+5.  Forum (Basic): Build the foundation for community interaction. Depends on Auth.
+6.  FAQ/AI Assistant: Can be built once core user structure is in place. Depends on Auth for context (potentially).
+7.  DMs: Requires user identification and interaction patterns, building on Auth and potentially Forum usage. Depends on Auth.
+8.  Achievements/Checklist Tracking: Enhancements that build upon the initial static features and user interaction. Depends on Auth and Roadmap/Checklist.
+9.  Institution-Specific Logic: Requires profile data and potentially more complex backend logic or integrations. Depends on User Profile.
+
+RISKS AND MITIGATIONS
+
+* Technical Challenges:
+    * Risk: Integrating AI assistant might be complex or costly.
+    * Mitigation: Start with a simple FAQ knowledge base; explore multiple AI providers or simpler solutions if full LLM integration proves difficult initially.
+    * Risk: Real-time features (DMs, Forum updates) at scale with Supabase.
+    * Mitigation: Leverage Supabase's real-time subscriptions effectively; optimize queries; plan for potential scaling needs.
+* Figuring out the MVP:
+    * Risk: Scope creep, trying to build too much in the first version.
+    * Mitigation: Strictly adhere to the Phase 1 scope defined in the roadmap. Focus on delivering core value (Auth, Checklist, Setup Info) first. Get user feedback early.
+* Resource Constraints:
+    * Risk: Limited development time/budget impacts feature completion.
+    * Mitigation: Prioritize ruthlessly based on the roadmap and dependency chain. Use existing libraries/services (Expo, Supabase, UI kits) to speed up development.
+* Data Privacy/Security:
+    * Risk: Handling user data (especially institution/major) requires care.
+    * Mitigation: Rely on Supabase Auth and security rules. Be transparent with users about data usage. Comply with relevant privacy regulations (e.g., GDPR, CCPA if applicable).
+* University Integration Complexity:
+    * Risk: Getting access to or integrating with university-specific systems can be very difficult or impossible.
+    * Mitigation: Design the app to function without deep integration initially. Focus on user-provided information (institution, major) to filter generic or crowdsourced content. Approach integrations as a long-term, opportunistic enhancement.
+
+APPENDIX
+
+* Research Findings: (Placeholder - Add any relevant user research, market analysis, or competitor reviews here).
+* Technical Specifications:
+    * Platform: iOS, Android (via Expo Go for development, EAS for builds).
+    * Language: TypeScript.
+    * Framework: React Native with Expo.
+    * Backend: Supabase (PostgreSQL, GoTrue, Realtime, Edge Functions).

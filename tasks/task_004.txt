@@ -1,0 +1,11 @@
+# Task ID: 4
+# Title: Core API Development
+# Status: pending
+# Dependencies: 2, 3
+# Priority: high
+# Description: Develop RESTful API endpoints for core application functionality
+# Details:
+Implement API controllers, request validation, error handling, and response formatting. Create endpoints for CRUD operations on primary entities, implement business logic, and ensure proper authentication/authorization checks.
+
+# Test Strategy:
+Write unit tests for controllers and services, integration tests for API endpoints, and validate against API specifications.

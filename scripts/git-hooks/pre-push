@@ -1,0 +1,12 @@
+#!/bin/sh
+# Run tests before pushing
+echo "Running tests..."
+npm test -- --watchAll=false
+
+# Exit with non-zero status if tests failed
+if [ $? -ne 0 ]; then
+  echo "Tests failed. Please fix them before pushing."
+  exit 1
+fi
+
+exit 0

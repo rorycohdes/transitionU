@@ -10,10 +10,24 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npm install
    ```
 
-2. Start the app
+2. Set up Google OAuth (for social login)
+
+   ```bash
+   npm run setup-oauth
+   ```
+
+   This script will guide you through setting up OAuth credentials in Google Cloud Console.
+
+3. Start the app
 
    ```bash
     npx expo start
+   ```
+
+   If you encounter port conflicts, use the alternative port:
+
+   ```bash
+   npm run start:alt
    ```
 
 In the output, you'll find options to open the app in a
@@ -48,3 +62,7 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+## Current Development Status
+
+> **Note:** Authentication is temporarily disabled in this version for faster development. The login screen is bypassed, and the app automatically loads with a guest user.

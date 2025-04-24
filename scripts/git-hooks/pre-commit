@@ -1,0 +1,22 @@
+#!/bin/sh
+# Run Expo lint on staged files
+echo "Running Expo lint..."
+npm run lint
+
+# Exit with non-zero status if Expo lint found errors
+if [ $? -ne 0 ]; then
+  echo "Expo lint found errors. Please fix them before committing."
+  exit 1
+fi
+
+# Run TypeScript type-checking
+echo "Running TypeScript..."
+npx tsc --noEmit
+
+# Exit with non-zero status if TypeScript found errors
+if [ $? -ne 0 ]; then
+  echo "TypeScript found errors. Please fix them before committing."
+  exit 1
+fi
+
+exit 0
